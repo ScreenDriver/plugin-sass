@@ -8,6 +8,23 @@ test('sanity check', assert => {
   assert.end();
 });
 
+test('normal partial import', assert => {
+  let request = {
+    current: 'mock/import',
+    previous: 'stdin',
+    options: {
+      urlBase: '//'
+    }
+  };
+
+  resolvePath(request, '/')
+    .then(p => {
+      assert.equal(p, '/mock/import.scss', 'resolves a normal partial import.');
+    })
+    .catch(e => assert.fail(e))
+    .then(() => assert.end());
+});
+
 test('jspm import', assert => {
   System.config({
     baseURL: __dirname,
@@ -36,7 +53,7 @@ test('jspm import', assert => {
     .then(() => assert.end());
 });
 
-test('nested imports', assert => {
+test('nested jspm imports', assert => {
   let request = {
     current: 'mixins/mixin',
     previous: '/jspm_packages/npm/mock-package@1.0.0/mock-asset',
