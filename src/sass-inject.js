@@ -61,14 +61,13 @@ const compile = scss => {
       }
       sass.compile(content, scss.options, result => {
         if (result.status === 0) {
-          if (result.hasOwnProperty("map")) {
+          if (result.hasOwnProperty('map')) {
             const style = document.createElement('link');
             style.setAttribute('type', 'text/css');
             style.setAttribute('rel', 'stylesheet');
             style.setAttribute('href', 'data:text/css;base64,' + btoa(result.text));
             document.getElementsByTagName('head')[0].appendChild(style);
-          }
-          else {
+          } else {
             const style = document.createElement('style');
             style.textContent = result.text;
             style.setAttribute('type', 'text/css');
