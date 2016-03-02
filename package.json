@@ -1,6 +1,6 @@
 {
   "name": "plugin-sass",
-  "version": "0.2.1",
+  "version": "0.3.0",
   "description": "SystemJS SASS loader plugin",
   "registry": "jspm",
   "main": "index.js",
@@ -47,9 +47,11 @@
       "lib": "src"
     },
     "dependencies": {
+      "autoprefixer": "npm:autoprefixer@^6.3.3",
       "fs": "github:jspm/nodelibs-fs@^0.1.2",
       "lodash": "npm:lodash@^3.10.1",
       "path": "github:jspm/nodelibs-path@^0.1.0",
+      "postcss": "npm:postcss@^5.0.18",
       "reqwest": "github:ded/reqwest@^2.0.5",
       "sass.js": "npm:sass.js@^0.9.6",
       "url": "github:jspm/nodelibs-url@^0.1.0"

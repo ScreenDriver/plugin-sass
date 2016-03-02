@@ -79,9 +79,9 @@ gulp.task('modernizr', () => {
 });
 
 gulp.task('test', () => {
-    return gulp.src('test/*.spec.js')
+  return gulp.src('test/*.spec.js')
     .pipe(tape({
-      reporter: tapColorize()
+      reporter: tapColorize(),
     }));
 });
 

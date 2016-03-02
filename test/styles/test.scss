@@ -9,3 +9,15 @@ body {
   background-repeat: no-repeat;
   background-color: pink;
 }
+
+.flexContainer {
+  display: flex;
+  flex-direction: row;
+}
+
+.fbox {
+  border: 1px solid silver;
+  border-radius: 4px;
+  padding: 4px;
+  background: gainsboro;
+}

@@ -1,11 +1,16 @@
 /* global Modernizr __moduleName */
+
 import './modernizr';
+
+import autoprefixer from 'autoprefixer';
 import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
 import isUndefined from 'lodash/lang/isUndefined';
+import path from 'path';
+import postcss from 'postcss';
 import reqwest from 'reqwest';
 import url from 'url';
-import path from 'path';
+
 import resolvePath from './resolve-path';
 
 const importSass = new Promise((resolve, reject) => {
@@ -53,21 +58,25 @@ importSass.then(sass => {
 
 const compile = scss => {
   return new Promise((resolve, reject) => {
+    const content = scss.content;
+    const responseText = content.responseText;
+    if (isString(content) && isEmpty(content) ||
+        !isUndefined(responseText) && isEmpty(responseText)) {
+      return resolve('');
+    }
     importSass.then(sass => {
-      const content = scss.content;
-      if (isString(content) && isEmpty(content) ||
-          !isUndefined(content.responseText) && isEmpty(content.responseText)) {
-        return resolve('');
-      }
-      sass.compile(content, scss.options, result => {
-        if (result.status === 0) {
-          const style = document.createElement('style');
-          style.textContent = result.text;
-          style.setAttribute('type', 'text/css');
-          document.getElementsByTagName('head')[0].appendChild(style);
-          resolve('');
+      sass.compile(content, scss.options, ({ status, text, formatted }) => {
+        if (status === 0) {
+          postcss([autoprefixer]).process(text).then(({ css }) => {
+            const style = document.createElement('style');
+            style.setAttribute('type', 'text/css');
+            style.textContent = css;
+            document.getElementsByTagName('head')[0].appendChild(style);
+            // return an empty module in the module pipeline itself
+            resolve('');
+          });
         } else {
-          reject(result.formatted);
+          reject(formatted);
         }
       });
     });

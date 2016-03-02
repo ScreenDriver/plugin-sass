@@ -1,10 +1,13 @@
+import autoprefixer from 'autoprefixer';
 import fs from 'fs';
 import isEmpty from 'lodash/lang/isEmpty';
-import sass from 'sass.js';
 import path from 'path';
+import postcss from 'postcss';
+import sass from 'sass.js';
+
 import resolvePath from './resolve-path';
 
-const cssInject = "(function(c){var d=document,a='appendChild',i='styleSheet',s=d.createElement('style');s.type='text/css';d.getElementsByTagName('head')[0][a](s);s[i]?s[i].cssText=c:s[a](d.createTextNode(c));})";
+const cssInject = "(function(c){if (typeof document == 'undefined') return; var d=document,a='appendChild',i='styleSheet',s=d.createElement('style');s.type='text/css';d.getElementsByTagName('head')[0][a](s);s[i]?s[i].cssText=c:s[a](d.createTextNode(c));})";
 const isWin = process.platform.match(/^win/);
 
 const escape = source => {
@@ -77,11 +80,13 @@ export default (loads, compileOpts) => {
       if (isEmpty(load.source)) {
         return resolve('');
       }
-      sass.compile(load.source, options, result => {
-        if (result.status === 0) {
-          resolve(result.text);
+      sass.compile(load.source, options, ({ status, text, formatted }) => {
+        if (status === 0) {
+          postcss([autoprefixer]).process(text).then(({ css }) => {
+            resolve(css);
+          });
         } else {
-          reject(result.formatted);
+          reject(formatted);
         }
       });
     });
