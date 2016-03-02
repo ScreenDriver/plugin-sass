@@ -8,18 +8,18 @@ test('sanity check', assert => {
   assert.end();
 });
 
-test('normal partial import', assert => {
+test('import', assert => {
   let request = {
     current: 'mock/import',
     previous: 'stdin',
     options: {
-      urlBase: '//'
+      urlBase: '/'
     }
   };
 
   resolvePath(request, '/')
     .then(p => {
-      assert.equal(p, '/mock/import.scss', 'resolves a normal partial import.');
+      assert.equal(p, '/mock/import.scss', 'resolves import.');
     })
     .catch(e => assert.fail(e))
     .then(() => assert.end());
@@ -72,7 +72,7 @@ test('nested jspm imports', assert => {
 
       resolvePath(request, '/')
         .then(p => {
-          assert.equal(p, '/jspm_packages/npm/mock-package@1.0.0/mixins/deeper/mixin.scss', 'resolves a double nested import');
+          assert.equal(p, '/jspm_packages/npm/mock-package@1.0.0/mixins/deeper/mixin.scss', 'resolves a doubly nested import');
         })
         .catch(e => assert.fail(e))
         .then(() => assert.end());
