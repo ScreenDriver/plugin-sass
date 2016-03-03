@@ -53,7 +53,7 @@ test('jspm import', assert => {
     .then(() => assert.end());
 });
 
-test('nested jspm imports', assert => {
+test('nested imports from jspm package', assert => {
   let request = {
     current: 'mixins/mixin',
     previous: '/jspm_packages/npm/mock-package@1.0.0/mock-asset',
