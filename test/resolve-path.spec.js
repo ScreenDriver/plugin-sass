@@ -8,6 +8,23 @@ test('sanity check', assert => {
   assert.end();
 });
 
+test('import', assert => {
+  let request = {
+    current: 'mock/import',
+    previous: 'stdin',
+    options: {
+      urlBase: '/'
+    }
+  };
+
+  resolvePath(request, '/')
+    .then(p => {
+      assert.equal(p, '/mock/import.scss', 'resolves import.');
+    })
+    .catch(e => assert.fail(e))
+    .then(() => assert.end());
+});
+
 test('jspm import', assert => {
   System.config({
     baseURL: __dirname,
@@ -36,7 +53,7 @@ test('jspm import', assert => {
     .then(() => assert.end());
 });
 
-test('nested imports', assert => {
+test('nested imports from jspm package', assert => {
   let request = {
     current: 'mixins/mixin',
     previous: '/jspm_packages/npm/mock-package@1.0.0/mock-asset',
@@ -55,7 +72,7 @@ test('nested imports', assert => {
 
       resolvePath(request, '/')
         .then(p => {
-          assert.equal(p, '/jspm_packages/npm/mock-package@1.0.0/mixins/deeper/mixin.scss', 'resolves a double nested import');
+          assert.equal(p, '/jspm_packages/npm/mock-package@1.0.0/mixins/deeper/mixin.scss', 'resolves a doubly nested import');
         })
         .catch(e => assert.fail(e))
         .then(() => assert.end());
