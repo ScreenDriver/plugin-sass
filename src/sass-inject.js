@@ -3,6 +3,7 @@
 import './modernizr';
 
 import autoprefixer from 'autoprefixer';
+import endsWith from 'lodash/string/endsWith';
 import isEmpty from 'lodash/lang/isEmpty';
 import isString from 'lodash/lang/isString';
 import isUndefined from 'lodash/lang/isUndefined';
@@ -85,7 +86,7 @@ const compile = scss => {
 
 export default load => {
   const urlBase = path.dirname(url.parse(load.address).pathname) + '/';
-  const indentedSyntax = load.address.endsWith('.sass');
+  const indentedSyntax = endsWith(load.address, '.sass');
   // load initial scss file
   return reqwest(load.address)
     // In Cordova Apps the response is the raw XMLHttpRequest
