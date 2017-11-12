@@ -59,9 +59,11 @@
       "autoprefixer": "npm:autoprefixer@^6.3.3",
       "css-asset-copier": "npm:css-asset-copier@^1.0.1",
       "css-url-rewriter-ex": "npm:css-url-rewriter-ex@^1.0.4",
+      "path": "github:jspm/nodelibs-path@^0.2.0",
       "postcss": "npm:postcss@^5.0.18",
       "reqwest": "github:ded/reqwest@^2.0.5",
-      "sass.js": "npm:sass.js@^0.9.6"
+      "sass.js": "npm:sass.js@^0.9.6",
+      "url": "github:jspm/nodelibs-url@^0.2.0"
     },
     "devDependencies": {
       "babel": "npm:babel-core@^5.8.24",
